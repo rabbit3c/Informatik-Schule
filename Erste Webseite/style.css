@@ -1,0 +1,93 @@
+* {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgb(21, 21, 21);
+    color: white;
+}
+
+@keyframes title {
+    from {
+        color:green;
+    }
+    to {
+        color:darkgreen;
+    }
+}
+
+@keyframes bitcoin {
+    from {
+        font-size: 15px;
+        border-color: darkgreen;
+        background-color: green;
+    }
+    to {
+        font-size: 20px;
+        border-color: green;
+        background-color: darkgreen;
+    }
+}
+
+body {
+    padding: 30px;
+}
+
+h1 {
+    text-transform: uppercase;
+    animation-name: title;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+h2 {
+    color: darkgreen;
+}
+
+a {
+    color: darkgreen;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+a:hover {
+    color: green;
+}
+
+div.spam{
+    width: 300px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spam a {
+    animation-name: bitcoin;
+    animation-duration: 0.2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    color: white;
+    font-weight: normal;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 2px solid;
+    border-color: green;
+    padding: 5px;
+}
+
+td img {
+    width: 250px;
+}
+
+#para1 {
+    border: 3px solid;
+    border-radius: 25px;
+    border-color: darkgreen;
+    background-color: green;
+    padding: 10px;
+    display: inline-block;
+}

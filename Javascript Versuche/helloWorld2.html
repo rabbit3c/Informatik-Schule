@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Hallo Welt<br>
+    <script>
+        console.log("Heute regnet es!");
+        document.write("Hallo, hier bin ich!<br>");  //nicht empfohlen
+        // Das ist ein Zeilenkommentar , python #
+        /* Das ist ein Blockkommentar...
+            python: '''     '''
+        */
+       var a=10;
+       var name="Anna";                         // Deklaration und Initialisierung
+       document.write(2*a, "Test", name,"<br>");
+       document.write(2+a,2/a, 2**a, 2-a, "<br>");
+       document.write(10%3, "<br>");
+       document.write(10%3, "<br>");
+       document.write(a>6, "<br>");         // true, python: "True"
+       document.write(a<6, "<br>"); 
+       document.write(a==6, "<br>");                    // !!!!!!
+       document.write(a>6 && name=="Renato", "<br>");  // && and
+       document.write(a>6 || name=="Renato", "<br>");   // || or
+       document.write(a>6 || name!="Renato", "<br>");   // != ungleich
+       document.write(!(a>6), "<br>");                  // ! not
+       a=a+1;                                           // keine Gleichung, sondern Zuweisung
+       document.write(a, "<br>");
+       name=prompt("Wie heisst du?");                   // input
+       document.write(name+" ist ein schöner Namen.", "<br>"); //+ heisst aneinanderhängen
+       var zahl=1.0*prompt("Bitte geben Sie eine Zahl ein!"); // Trick!
+       document.write(zahl+2);
+
+
+
+
+
+
+    </script>
+</body>
+</html>

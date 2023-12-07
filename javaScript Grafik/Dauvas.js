@@ -12,6 +12,7 @@ fillRectCenterRotate(x,y,width,height,angle);   // ...gedreht um Winkel alpha im
 rectCenterRotate(x,y,width,height,angle);		// ...gedreht um Winkel alpha im Uhrzeigersinn in °
 fillRectRotate(x,y,width,height,angle);			// gedreht um den unteren linken Eckpunkt
 rectRotate(x,y,width,height,angle);				// gedreht um den unteren linken Eckpunkt
+fillRectRounded(x, y, width, height, radius)	// gefülltes Rechteck mit abgerundeten Ecken
 
 Dreiecke
 fillTriangle(x1,y1,x2,y2,x3,y3)					// Allgemeines Dreieck aus 3 Punkte
@@ -45,6 +46,7 @@ fillPoly(flatArray)								// Polygon e.g. [0,0,100,100,70,0]
 poly(flatArray)
 
 // Farbnamen siehe z.B. https://www.periodni.com/de/html_farbnamen.html
+rgb(r, g, b)									// rot, grün, blau Weter von 0-255
 setFillColor(farbe)								// z.B. "FF2288" im Hex Format oder "blue"
 setFillColorRGB(r,g,b)							// rot, grün, blau Werte von 0-255 				
 setLineColor(farbe)								// für den Rand der Figuren
@@ -177,20 +179,35 @@ function fillRect(x1,y1,w,h){						// Mitte, Breite, Höhe
 	ctx.fillRect(x1,y1,w,h);
 }
 
-function fillRectCenterRotate(x,y,width,height,alpha){						
+function baseFillRectRotate(x, y, x1, y1, width, height, alpha) {
 	ctx.save();
 	ctx.translate(x,y);	
 	ctx.rotate(alpha*Math.PI/180);
-	ctx.fillRect(-width/2,-height/2,width, height);
+	ctx.fillRect(x1,y1, width, height);
 	ctx.restore();
 }
 
-function fillRectRotate(x,y,width,height,alpha){						
-	ctx.save();
-	ctx.translate(x,y);	
-	ctx.rotate(alpha*Math.PI/180);
-	ctx.fillRect(0,0,width, height);
-	ctx.restore();
+function fillRectCenterRotate(x,y,width,height,alpha){		
+	baseFillRectRotate(x, y, -width/2, -height/2, width, height, alpha);				
+}
+
+function fillRectRotate(x,y,width,height,alpha){	
+	baseFillRectRotate(x, y, 0, 0, width, height, alpha);					
+}
+
+function fillRectRounded(x, y, width, height, r) {
+	ctx.beginPath();
+	ctx.arc(x + r, y + r, r, - Math.PI , - 0.5 * Math.PI);
+	ctx.lineTo(x + width - r, y);
+	ctx.arc(x + width - r, y + r, r, - 0.5 * Math.PI, 0);
+	ctx.moveTo(x + width, y + r);
+	ctx.lineTo(x + width, y + height - r);
+	ctx.arc(x + width - r, y + height - r, r, 0, 0.5 * Math.PI);
+	ctx.lineTo(x + r, y + height);
+	ctx.arc(x + r, y + height - r, r, 0.5 * Math.PI, Math.PI);
+	ctx.lineTo(x, y + r);
+	ctx.closePath();
+	ctx.fill();
 }
 
 function rectCenterRotate(x,y,width,height,alpha){						
@@ -224,35 +241,39 @@ function fillRectCenter(x,y,width,height){						// Mitte, Breite, Höhe
 }
 
 //Farben und Style******************************************************************************
+function rgb(r, g, b) {
+	return "rgb("+r+","+g+","+b+")";
+}
+
 function setFillColor(farbe){
 	ctx.fillStyle = farbe;
 }
 
 function setLineColor(farbe){
-	ctx.strokeStyle =farbe;
+	ctx.strokeStyle = farbe;
 }
 
 function setLineWidth(d){
-	ctx.lineWidth=d;
+	ctx.lineWidth = d;
 }
 
 function setFillColorRGB(r,g,b){
-	var farbe="rgb("+r+","+g+","+b+")";
+	var farbe = rgb(r, g, b);
 	ctx.fillStyle = farbe;
-	}
+}
 	
 function setLineColorRGB(r,g,b){
-	var farbe="rgb("+r+","+g+","+b+")";
-	ctx.strokeStyle =farbe;
+	var farbe = rgb(r, g, b);
+	ctx.strokeStyle = farbe;
     ctx.stroke();
-	}
+}
 
 function setBackgroundColorRGB(r,g,b){
-	document.getElementById("myCanvas").style.backgroundColor = "rgb("+r+","+g+","+b+")";
-	}
+	document.getElementById("myCanvas").style.backgroundColor = rgb(r, g, b);
+}
  
 function setBackgroundColor(farbe){
-	document.getElementById("myCanvas").style.backgroundColor =farbe;
+	document.getElementById("myCanvas").style.backgroundColor = farbe;
 }
 
 function setRandomFillColor(){
@@ -261,7 +282,7 @@ function setRandomFillColor(){
 
 function setRandomLineColor() {
 	var r=Math.random()*256,  g=Math.random()*256, b=Math.random()*256;
-	var farbe="rgb("+r+","+g+","+b+")";
+	var farbe = rgb(r, g, b);
 	ctx.strokeStyle =farbe;
     ctx.stroke();
 }
@@ -308,7 +329,7 @@ function fillOval(x,y,rx,ry){
       ctx.fill();     
 }
  
- function oval(x,y,rx,ry){
+function oval(x,y,rx,ry){
       ctx.save();
       ctx.translate(x,y);
       ctx.scale(1,ry/rx);
@@ -318,7 +339,7 @@ function fillOval(x,y,rx,ry){
       ctx.stroke();
 }
 
-function fillOvalRotate(x,y,width,height,alpha){						
+function fillOvalRotate(x, y, rx, ry, alpha){						
 	ctx.save();
 	ctx.translate(x,y);	
 	ctx.scale(1,ry/rx);
@@ -328,7 +349,7 @@ function fillOvalRotate(x,y,width,height,alpha){
 	ctx.restore();
 }
 
-function ovalRotate(x,y,rx,ry,alpha){						
+function ovalRotate(x, y, rx, ry, alpha){						
 	ctx.save();
 	ctx.translate(x,y);	
 	ctx.rotate(alpha*Math.PI/180);
@@ -339,14 +360,14 @@ function ovalRotate(x,y,rx,ry,alpha){
 }
 
 function fillOvalRotate(x,y,rx,ry,alpha){
-      ctx.save();
-      ctx.translate(x,y);
-	  ctx.rotate(alpha*Math.PI/180);
-      ctx.scale(1,ry/rx);
-      ctx.beginPath();
-      ctx.arc(0, 0, rx, 0, 2 * Math.PI, false);
-      ctx.restore();
-      ctx.fill();     
+	ctx.save();
+	ctx.translate(x,y);
+	ctx.rotate(alpha*Math.PI/180);
+	ctx.scale(1,ry/rx);
+	ctx.beginPath();
+	ctx.arc(0, 0, rx, 0, 2 * Math.PI, false);
+	ctx.restore();
+	ctx.fill();     
 }
 
 function fillPoly(flatArray){		// e.g. [0,0,100,100,50,0]

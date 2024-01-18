@@ -187,15 +187,19 @@ function baseFillRectRotate(x, y, x1, y1, width, height, alpha) {
 	ctx.restore();
 }
 
-function fillRectCenterRotate(x,y,width,height,alpha){		
-	baseFillRectRotate(x, y, -width/2, -height/2, width, height, alpha);				
+function fillRectCenterRotate(x,y,width,height,alpha){						
+	ctx.save();
+	ctx.translate(x,y);	
+	ctx.rotate(alpha*Math.PI/180);
+	ctx.fillRect(-width/2,-height/2,width, height);
+	ctx.restore();
 }
 
 function fillRectRotate(x,y,width,height,alpha){	
 	baseFillRectRotate(x, y, 0, 0, width, height, alpha);					
 }
 
-function fillRectRounded(x, y, width, height, r) {
+function baseRectRounded(x, y, width, height,r) {
 	ctx.beginPath();
 	ctx.arc(x + r, y + r, r, - Math.PI , - 0.5 * Math.PI);
 	ctx.lineTo(x + width - r, y);
@@ -208,6 +212,26 @@ function fillRectRounded(x, y, width, height, r) {
 	ctx.lineTo(x, y + r);
 	ctx.closePath();
 	ctx.fill();
+}
+
+function fillRectRounded(x, y, width, height, r) {
+	baseRectRounded(x, y, width, height, r);
+}
+
+function fillRectRoundedCenterRotate(x, y, width, height, r, alpha) {
+	ctx.save();
+	ctx.translate(x,y);	
+	ctx.rotate(alpha*Math.PI/180);
+	baseRectRounded(-width/2, -height/2, width, height, r);
+	ctx.restore();
+}
+
+function fillRectRoundedRotate(x, y, width, height, r, alpha) {
+	ctx.save();
+	ctx.translate(x,y);	
+	ctx.rotate(alpha*Math.PI/180);
+	baseRectRounded(0, 0, width, height, r);
+	ctx.restore();
 }
 
 function rectCenterRotate(x,y,width,height,alpha){						

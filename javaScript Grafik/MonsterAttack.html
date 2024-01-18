@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Zeichnen auf der Canvas</title>
+        <style>
+            body,
+            html {
+                padding: 0;
+                margin: 0;
+            }
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="700" height="350"></canvas>
+        <script src="dauvas.js"></script>
+        <script src="monster.js"></script>
+        <script>
+            //setTimeout(monster, 2000, xmax / 2, ymax / 2, 250);
+
+            function startAnimation(x, y) {
+                let clicked = false;
+                let a = 2;
+                let interval = setInterval(step, 10, x, y);
+
+                function step(x, y) {
+                    monster(x, y, a);
+                    a = a ** 1.02;
+
+                    document.addEventListener("click", onClick);
+
+                    function onClick(event) {
+                        let xClick = event.clientX;
+                        let yClick = event.clientY;
+
+                        dx = x - xClick;
+                        dy = y - yClick;
+
+                        d = Math.sqrt(dx ** 2 + dy ** 2);
+
+                        if (d <= a && !clicked) {
+                            clicked = true;
+                            clearInterval(interval);
+                            clearScreen();
+                            setTimeout(spawnVirus, 1000);
+                        }
+                    }
+
+                    if (a > ymax / 2 - 100) {
+                        clearInterval(interval);
+                        clearScreen();
+                        document.write("<h1><center>Game over<\center><\h1>");
+                    }
+                }
+            }
+
+            function spawnVirus() {
+                startAnimation(
+                    Math.random() * (xmax - 100) + 50,
+                    Math.random() * (ymax - 100) + 50
+                );
+            }
+
+            spawnVirus();
+        </script>
+    </body>
+</html>

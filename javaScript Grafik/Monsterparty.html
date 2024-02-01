@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Zeichnen auf der Canvas</title>
+		<style>	
+			body, html{padding:0; margin:0;}
+		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	</head>	
+	<body>
+		<canvas id="myCanvas" width="700" height="350"></canvas>
+		<script src="dauvas.js"></script>
+		<script src="monster.js"></script>
+		<script>
+			let monsters = [];
+			let n = 50;
+			let size = 30;
+			let count = 0;
+
+			var music = new Audio('Sounds/Sax Gandalf.mp3');
+			var damageSound = new Audio('Sounds/Damage sound.mp3')
+
+			for (let i = 0; i < n; i++) {
+				let x = Math.floor(Math.random() * xmax);
+				let y = Math.floor(Math.random() * ymax);
+				monsters.push([x, y, size, "green"]);
+			}
+
+			function draw() {
+				clearScreen();
+				for (m of monsters) {
+					monster(m[0], m[1], m[2], 6, m[3]);
+				}
+			}
+
+			function isEven(number) {
+				let remainder = number % 2;
+				return remainder == 0;
+			}
+
+
+			function step() {
+				let direction = isEven(count) ? 1 : -1
+				let distance = 10;
+
+				for (m of monsters) {
+					m[1] += direction * distance;
+
+					if (m[3] == "green") {
+						m[2] += direction * distance * 0.25;
+					}
+				}
+				count++;
+
+				music.play();
+				draw();
+
+				if (Math.random() < 0.05) {
+					let randomIndex = Math.floor(Math.random() * monsters.length);
+					console.log(randomIndex);
+					monsters[randomIndex][3] = "red";
+					damageSound.play();
+				}
+			}
+
+			let animate = setInterval(step, 230);
+		</script>
+			
+		</body>
+</html>

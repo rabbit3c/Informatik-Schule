@@ -423,6 +423,13 @@ function clearScreen(){
 	ctx.clearRect(0,0,xmax,ymax);
 }
 
+function write(string) {
+	ctx.setFillColor("black");
+	ctx.textAlign = "center";
+	ctx.font = "400px Arial";
+    ctx.fillText(string, xmax/2, ymax/2);
+}
+
 function fullScreen(){
 	xmax=window.innerWidth;
 	ctx.canvas.width=xmax;

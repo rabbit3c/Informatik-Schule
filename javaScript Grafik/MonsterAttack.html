@@ -12,56 +12,129 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
     <body>
-        <canvas id="myCanvas" width="700" height="350"></canvas>
+        <canvas
+            style="display: block"
+            id="myCanvas"
+            width="700"
+            height="350"
+        ></canvas>
         <script src="dauvas.js"></script>
         <script src="monster.js"></script>
         <script>
             //setTimeout(monster, 2000, xmax / 2, ymax / 2, 250);
+            let score = 0;
+            let gameOver = false;
+            let monsters = [];
+            let character = "";
 
-            function startAnimation(x, y) {
-                let clicked = false;
-                let a = 2;
-                let interval = setInterval(step, 10, x, y);
+            function startAnimation() {
+                let interval = setInterval(step, 10);
+                document.addEventListener("click", onClick);
+                document.addEventListener("keydown", keyDown, false);
+                character = randomCharacter();
+            }
 
-                function step(x, y) {
-                    monster(x, y, a);
-                    a = a ** 1.02;
+            function showViruses() {
+                clearScreen();
+                write(character);
+                for (data of monsters) {
+                    monster(data[0], data[1], data[2]);
+                }
+            }
 
-                    document.addEventListener("click", onClick);
+            function step() {
+                showViruses();
+                for (data of monsters) {
+                    let modifier = score * 0.0002;
+                    data[2] *= Math.max(1.04 - modifier, 1.01);
 
-                    function onClick(event) {
-                        let xClick = event.clientX;
-                        let yClick = event.clientY;
-
-                        dx = x - xClick;
-                        dy = y - yClick;
-
-                        d = Math.sqrt(dx ** 2 + dy ** 2);
-
-                        if (d <= a && !clicked) {
-                            clicked = true;
-                            clearInterval(interval);
-                            clearScreen();
-                            setTimeout(spawnVirus, 1000);
-                        }
-                    }
-
-                    if (a > ymax / 2 - 100) {
-                        clearInterval(interval);
+                    if (data[2] > ymax / 2 - 100) {
+                        monsters = [];
                         clearScreen();
-                        document.write("<h1><center>Game over<\center><\h1>");
+                        document.write(
+                            `<h1><center>Game over </br> You score is ${score} <\center><\h1>`
+                        );
                     }
                 }
             }
 
+            function onClick(event) {
+                let xClick = event.clientX;
+                let yClick = event.clientY;
+
+                for (data of monsters) {
+                    dx = data[0] - xClick;
+                    dy = data[1] - yClick;
+
+                    d = Math.sqrt(dx ** 2 + dy ** 2);
+
+                    if (d <= data[2]) {
+                        resetVirus(data);
+                    }
+                }
+            }
+
+            function keyDown(e) {
+                let key = e.keyCode;
+                let typedCharacter = "";
+                //console.log(key);
+
+                switch (key) {
+                    case 65:
+                        typedCharacter = "A";
+                        break;
+                    case 87:
+                        typedCharacter = "W";
+                        break;
+                    case 83:
+                        typedCharacter = "S";
+                        break;
+                    case 68:
+                        typedCharacter = "D";
+                        break;
+                    default:
+                        break;
+                }
+
+                if (character == typedCharacter) {
+                    resetVirus(randomMonster());
+                }
+
+                character = randomCharacter();
+            }
+
+            function resetVirus(data) {
+                data[0] = Math.random() * (xmax - 100) + 50;
+                data[1] = Math.random() * (ymax - 100) + 50;
+                data[2] = 2;
+                score++;
+
+                if (Math.ceil(score / 10) == monsters.length) return;
+
+                spawnVirus();
+            }
+
+            function randomMonster() {
+                return monsters[Math.floor(Math.random() * monsters.length)];
+            }
+
+            function randomCharacter() {
+                let characters = ["W", "A", "S", "D"];
+                return characters[
+                    Math.floor(Math.random() * characters.length)
+                ];
+            }
+
             function spawnVirus() {
-                startAnimation(
+                monsters.push([
                     Math.random() * (xmax - 100) + 50,
-                    Math.random() * (ymax - 100) + 50
-                );
+                    Math.random() * (ymax - 100) + 50,
+                    2,
+                ]);
             }
 
             spawnVirus();
+            startAnimation();
         </script>
     </body>
 </html>

@@ -1,5 +1,5 @@
 let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-let punctuations = [".", ",", ":", "?", "!", ";", "-"]
+let punctuations = ".,:?!;-)("
 
 function showDate(day, month, year) {
     console.log(`${day}. ${months[month - 1]}. ${year}`)
@@ -43,19 +43,15 @@ function shuffleString(string) {
 
 function carefulMix(string) {
     let array = string.split("");
-    let punctFirst = "";
-    let punctLast = "";
-    if (punctuations.indexOf(array[-1]) != -1) {
-        punctLast = array[-1];
-        array.splice(-1, 1);
-    }
-    if (punctuations.indexOf(array[0]) != -1) {
-        punctLast = array[0];
-        array.splice(0, 1);
-    }
+    let start = 0
+    let end = array.length - 2;
 
-    for (let i = array.length - 2; i > 0; i--) { //Fisher - Yates Shuffle Algorithm
-        let n = Math.floor(Math.random() * i) + 1;
+    while (punctuations.indexOf(array[end + 1]) != -1) end--;
+
+    while (punctuations.indexOf(array[start]) != -1) start++;
+
+    for (let i = end; i > start; i--) { //Fisher - Yates Shuffle Algorithm
+        let n = Math.floor(Math.random() * (i - start)) + start + 1;
 
         if (i == n) continue;
 
@@ -63,7 +59,6 @@ function carefulMix(string) {
     }
 
     string = array.join("");
-    string = punctFirst + string + punctLast;
     return string;
 }
 
@@ -83,4 +78,4 @@ console.log(shuffleString("Aylin"));
 console.log(carefulMix("Aylin"));
 console.log(shuffle("Bitte Laptop Deckel schliessen!"));
 console.log(shuffle("Haben sie das in Mathe schon gemacht?"));
-console.log(shuffle("Der Sinn des Lebens besteht nicht darin, ein erfolgreicher Mensch zu sein, sondern ein wertvoller."));
+console.log(shuffle("!:()!Der Sinn des Lebens besteht nicht darin, ein erfolgreicher Mensch zu sein, sondern ein wertvoller.!!??)"));

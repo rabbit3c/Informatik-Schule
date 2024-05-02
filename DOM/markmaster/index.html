@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>MarkMaster</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </head>
+    <body>
+        <div class="p-5 bg-success text-white text-center">
+            <h1 class="display-3">MarkMaster</h1>
+            <p>Marks calculator powered by Rabbit3c</p>
+        </div>
+
+        <div class="p-5 bg-white text-black text-center">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-1">
+                    <h4>Mark</h4>
+                    <input type="number" id="mark" class="form-control" value="1">
+                </div>
+            </div>
+
+            </br>
+
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-1">
+                    <h4>Weight</h4>
+                    <input type="number" id="weight" class="form-control">
+                </div>
+            </div>
+
+            </br>
+            
+            <button type="button" id="button-click" onclick="addMark()" class="btn btn-success text-white btn-lg">
+                Add Mark
+            </button>
+
+            </br>
+            </br>
+
+            <div class="row justify-content-center">
+                <div class="col text-end">
+                    <h4>Current Average: </h4>
+                </div>
+                <div class="col text-start">
+                    <h4 id="average">-</h4>
+                </div>
+            </div>
+
+            </br>
+
+            <div class="row justify-content-center">
+                <div class="col text-end">
+                    <h4>Wanted Average:</h4>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="dropdown col-lg-1">
+                            <button type="button" id="dropdown" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown">
+                                6
+                            </button>
+
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="changeWantedAverage(1)">1</a></li>
+                                <li><a class="dropdown-item" onclick="changeWantedAverage(1.5)">1.5</a></li>
+                                <li><a class="dropdown-item" onclick="changeWantedAverage(2)">2</a></li>
+                                <li><a class="dropdown-item" onclick="changeWantedAverage(2.5)">2.5</a></li>
+                                <li><a class="dropdown-item" onclick="changeWantedAverage(3)">3</a></li>
+                                <li><a class="dropdown-item" onclick="changeWantedAverage(3.5)">3.5</a></li>
+                                <li><a class="dropdown-item" onclick="changeWantedAverage(4)">4</a></li>
+                                <li><a class="dropdown-item" onclick="changeWantedAverage(4.5)">4.5</a></li>
+                                <li><a class="dropdown-item" onclick="changeWantedAverage(5)">5</a></li>
+                                <li><a class="dropdown-item" onclick="changeWantedAverage(5.5)">5.5</a></li>
+                                <li><a class="dropdown-item" onclick="changeWantedAverage(6)">6</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </br>
+
+            <div class="row justify-content-center">
+                <div class="col text-end">
+                    <h4>Required Mark: </h4>
+                </div>
+                <div class="col text-start">
+                    <h4 id="required-mark">-</h4>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script src="markmaster.js"></script>
+</html>

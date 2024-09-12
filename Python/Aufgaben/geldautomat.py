@@ -17,7 +17,7 @@ def print_output():
     for i, amount_of_option in enumerate(amount_of_options):
         if amount_of_option == 0:
             continue
-        output = f"{output}, {amount_of_option} times a {options[i]}"
+        output = f"{output}, {int(amount_of_option)} times a {options[i]}"
     print(output)
 
 

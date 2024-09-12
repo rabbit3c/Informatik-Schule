@@ -1,9 +1,8 @@
 def main():
     lower_bound = 0
-    upper_bound = 100
+    upper_bound = 1000
 
     while upper_bound - lower_bound > 1:
-        print(upper_bound, lower_bound)
         middle = (upper_bound - lower_bound) // 2 + lower_bound
         if question_user(middle):
             lower_bound = middle

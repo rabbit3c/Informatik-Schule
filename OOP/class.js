@@ -1,4 +1,6 @@
 class Employee {
+    static number = 0;
+
     constructor(id, first_name, surname, age) {
         this.id = id;
         this.first_name = first_name;
@@ -8,6 +10,11 @@ class Employee {
 
     display() {
         console.log(`${this.id} ${this.first_name} ${this.surname} ${this.age}`);
+    }
+
+    static counter() {
+        this.number++;
+        console.log(`Number: ${this.number}`)
     }
 }
 
@@ -26,3 +33,5 @@ emp2.salary = 2;
 console.log(emp2.salary);
 
 emp1.display();
+Employee.counter();
+Employee.counter();
